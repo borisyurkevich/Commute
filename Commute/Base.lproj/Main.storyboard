@@ -13,7 +13,7 @@
         <scene sceneID="Nbt-ty-ROm">
             <objects>
                 <viewControllerPlaceholder storyboardName="TravelTableViewController" id="hJd-As-Cbh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="Ali-rL-oAB"/>
+                    <tabBarItem key="tabBarItem" title="Train" id="Ali-rL-oAB"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMj-T5-Pql" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

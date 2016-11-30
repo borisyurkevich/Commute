@@ -59,17 +59,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="480-SK-BqM"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iFe-81-R4P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="922" y="29"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item 0-->
         <scene sceneID="I7K-yg-rq3">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-xv-kHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="TravelTable" automaticallyAdjustsScrollViewInsets="NO" id="8qU-FT-sic" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item 0" id="cyd-NO-lFp"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dh5-Us-9K2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

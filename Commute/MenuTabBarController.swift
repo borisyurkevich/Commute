@@ -26,10 +26,13 @@ class MenuTabBarController: UITabBarController {
             switch index {
             case 0:
                 trains = navigation.viewControllers.first as? TravelTableViewController
+                navigation.tabBarItem.title = NSLocalizedString("Train", comment: "Tab Bar Title")
             case 1:
                 buses = navigation.viewControllers.first as? TravelTableViewController
+                navigation.tabBarItem.title = NSLocalizedString("Bus", comment: "Tab Bar Title")
             case 2:
                 flights = navigation.viewControllers.first as? TravelTableViewController
+                navigation.tabBarItem.title = NSLocalizedString("Flight", comment: "Tab Bar Title")
             default:
                 break
             }
@@ -57,13 +60,22 @@ extension MenuTabBarController: ModelDelegate {
         switch dataType {
         case .bus:
             buses?.dataSource = model.busTrips
-            buses?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.buses?.tableView.reloadData()
+            }
+            
         case .plain:
             flights?.dataSource = model.plainTrips
-            flights?.tableView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.flights?.tableView.reloadData()
+            }
         case .train:
             trains?.dataSource = model.trainTrips
-            trains?.tableView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.trains?.tableView.reloadData()
+            }
         }
     }
     

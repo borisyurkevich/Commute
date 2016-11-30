@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class NetworkManager {
 
@@ -35,6 +36,9 @@ class NetworkManager {
         
         let task = mySession.dataTask(with: urlRequest)
         { (data, response, error) -> Void in
+        
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
             guard error == nil else {
                 print("Error while fetching remote trips: \(error)")
                 completion(false, error, nil)
@@ -72,6 +76,7 @@ class NetworkManager {
             completion(true, nil, posts)
         }
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         task.resume()
     }
 
