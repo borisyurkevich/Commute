@@ -24,13 +24,15 @@ class MenuTabBarController: UITabBarController {
             let navigation = controller as! UINavigationController
         
             switch index {
-            case 0:
+            case Transport.train.rawValue:
                 trains = navigation.viewControllers.first as? TravelTableViewController
                 navigation.tabBarItem.title = NSLocalizedString("Train", comment: "Tab Bar Title")
-            case 1:
+                
+            case Transport.bus.rawValue:
                 buses = navigation.viewControllers.first as? TravelTableViewController
                 navigation.tabBarItem.title = NSLocalizedString("Bus", comment: "Tab Bar Title")
-            case 2:
+                
+            case Transport.plain.rawValue:
                 flights = navigation.viewControllers.first as? TravelTableViewController
                 navigation.tabBarItem.title = NSLocalizedString("Flight", comment: "Tab Bar Title")
             default:
@@ -39,6 +41,9 @@ class MenuTabBarController: UITabBarController {
         }
         
         model.delegate = self
+        
+        // Requests are chained to avoid CoreData crash
+        // Train -> Bus -> Flight
         model.update(type: .train)
     }
 
@@ -56,26 +61,27 @@ class MenuTabBarController: UITabBarController {
 
 extension MenuTabBarController: ModelDelegate {
     
-    func newDataAvailable(dataType: DataType) {
+    func newDataAvailable(dataType: Transport) {
         switch dataType {
+        case .train:
+            trains?.dataSource = model.trainTrips
+            DispatchQueue.main.async {
+                self.trains?.tableView.reloadData()
+            }
+            self.model.update(type: .bus)
         case .bus:
             buses?.dataSource = model.busTrips
             DispatchQueue.main.async {
                 self.buses?.tableView.reloadData()
             }
+            self.model.update(type: .plain)
             
         case .plain:
             flights?.dataSource = model.plainTrips
-            
             DispatchQueue.main.async {
                 self.flights?.tableView.reloadData()
             }
-        case .train:
-            trains?.dataSource = model.trainTrips
-            
-            DispatchQueue.main.async {
-                self.trains?.tableView.reloadData()
-            }
+            // All data is loaded
         }
     }
     

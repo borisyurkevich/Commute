@@ -10,7 +10,7 @@ import UIKit
 
 class TravelTableViewController: UITableViewController {
 
-    var dataSource = [Trip]()
+    var dataSource = [TripEntity]()
 
     override func viewDidLoad() {
         super.viewDidLoad()

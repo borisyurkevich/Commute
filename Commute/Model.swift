@@ -10,43 +10,28 @@ import UIKit
 
 protocol ModelDelegate {
     
-    func newDataAvailable(dataType: DataType)
+    func newDataAvailable(dataType: Transport)
     func handleNetwork(error: Error?)
 }
 
-enum DataType {
-    case bus
+enum Transport: Int {
     case train
+    case bus
     case plain
 }
 
 class Model {
 
-    var busTrips = [Trip]()
-    var trainTrips = [Trip]()
-    var plainTrips = [Trip]()
+    var busTrips = [TripEntity]()
+    var trainTrips = [TripEntity]()
+    var plainTrips = [TripEntity]()
     
     var delegate: ModelDelegate?
     var network = NetworkManager()
     
-    func update(type: DataType) {
+    func update(type: Transport) {
         
-        // Make a network request
-        var path = ""
-        
-        switch type {
-        case .bus:
-            path = NetworkManager.urlPath.bus
-            
-        case .plain:
-            path = NetworkManager.urlPath.flight
-            
-        case .train:
-            path = NetworkManager.urlPath.train
-            
-        }
-        
-        network.request(path: path, completion: { (success, error, result) in
+        network.request(commuteOption: type, completion: { (success, error, result) in
             
             if success {
             

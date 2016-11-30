@@ -11,6 +11,8 @@ import CoreData
 
 class CoreDataManager {
 
+    static let enitiyId = "TripEntity"
+
     static let sharedInstance : CoreDataManager = {
         let instance = CoreDataManager(modelName: "Commute")
         return instance
@@ -47,8 +49,25 @@ class CoreDataManager {
         }
     }
     
+    func remove(type: Transport) {
+        let postRequest = NSFetchRequest<TripEntity>(entityName: CoreDataManager.enitiyId)
+        do {
+            let results = try managedContext.fetch(postRequest)
+            
+            let filteredResult = results.filter{Int($0.type) == type.rawValue}
+            
+            for result in filteredResult {
+                managedContext.delete(result)
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch users for deleting: \(error), \(error.userInfo)")
+        }
+        saveContext()
+    }
+    
     func removeAll() {
-        let postRequest = NSFetchRequest<Trip>(entityName: "Trip")
+        let postRequest = NSFetchRequest<TripEntity>(entityName: CoreDataManager.enitiyId)
         do {
             let results = try managedContext.fetch(postRequest)
             for result in results {
@@ -60,4 +79,5 @@ class CoreDataManager {
         }
         saveContext()
     }
+    
 }
