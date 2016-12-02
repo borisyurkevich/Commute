@@ -58,7 +58,6 @@ extension MenuTabBarController: ModelDelegate {
             
         case .bus:
             buses?.dataSource = model.busTrips
-            buses?.images = model.busTripsImages
             DispatchQueue.main.async {
                 self.buses?.tableView.reloadData()
             }
@@ -69,25 +68,6 @@ extension MenuTabBarController: ModelDelegate {
                 self.flights?.tableView.reloadData()
             }
         }
-    }
-    
-    func handleNetwork(error: Error?) {
-        
-        var description = NSLocalizedString("Couldn't load your data.",
-                                                   comment: "alert message")
-        if let myDescription = error?.localizedDescription {
-            description = myDescription
-        }
-        
-        let alert = UIAlertController(title: NSLocalizedString("Network Error", comment: "alert title"),
-                                      message: description,
-                                      preferredStyle: .alert)
-        
-        let alertOption = UIAlertAction(title: NSLocalizedString("OK",
-                                                                 comment: "alert ok btn"),
-                                        style: .default, handler: nil)
-        alert.addAction(alertOption)
-        self.present(alert, animated: true, completion: nil)
     }
     
     func newImagesAvailable(dataType: Transport) {
@@ -112,5 +92,24 @@ extension MenuTabBarController: ModelDelegate {
             }
 
         }
+    }
+    
+    func handleNetwork(error: Error?) {
+        
+        var description = NSLocalizedString("Couldn't load your data.",
+                                            comment: "alert message")
+        if let myDescription = error?.localizedDescription {
+            description = myDescription
+        }
+        
+        let alert = UIAlertController(title: NSLocalizedString("Network Error", comment: "alert title"),
+                                      message: description,
+                                      preferredStyle: .alert)
+        
+        let alertOption = UIAlertAction(title: NSLocalizedString("OK",
+                                                                 comment: "alert ok btn"),
+                                        style: .default, handler: nil)
+        alert.addAction(alertOption)
+        self.present(alert, animated: true, completion: nil)
     }
 }
