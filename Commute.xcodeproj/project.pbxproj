@@ -20,6 +20,9 @@
 		91AEF4271DEB55600007B1D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91AEF4261DEB55600007B1D0 /* Assets.xcassets */; };
 		91AEF42A1DEB55600007B1D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91AEF4281DEB55600007B1D0 /* LaunchScreen.storyboard */; };
 		91AEF4351DEB55600007B1D0 /* CommuteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AEF4341DEB55600007B1D0 /* CommuteTests.swift */; };
+		91EE701E1DF0E7D80079ED43 /* ImageEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE701C1DF0E7D80079ED43 /* ImageEntity+CoreDataClass.swift */; };
+		91EE701F1DF0E7D80079ED43 /* ImageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE701D1DF0E7D80079ED43 /* ImageEntity+CoreDataProperties.swift */; };
+		91EE70231DF0F3AC0079ED43 /* LogoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE70221DF0F3AC0079ED43 /* LogoImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		91AEF4301DEB55600007B1D0 /* CommuteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommuteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91AEF4341DEB55600007B1D0 /* CommuteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommuteTests.swift; sourceTree = "<group>"; };
 		91AEF4361DEB55600007B1D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91EE701C1DF0E7D80079ED43 /* ImageEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		91EE701D1DF0E7D80079ED43 /* ImageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		91EE70221DF0F3AC0079ED43 /* LogoImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,11 +108,9 @@
 		91AEF41C1DEB55600007B1D0 /* Commute */ = {
 			isa = PBXGroup;
 			children = (
-				91690A481DECC2C7003B94FF /* Model.swift */,
-				91690A531DEE3367003B94FF /* NetworkManager.swift */,
+				91EE70211DF0E7F30079ED43 /* Model */,
+				91EE70201DF0E7E30079ED43 /* Data */,
 				91690A571DEE42A8003B94FF /* MenuTabBarController.swift */,
-				91690A4E1DEE1B34003B94FF /* Commute.xcdatamodeld */,
-				91690A511DEE1C14003B94FF /* CoreDataManager.swift */,
 				91690A461DECC2B1003B94FF /* TravelTableViewController.swift */,
 				91690A4A1DECC4FC003B94FF /* TravelTableViewCell.swift */,
 				91AEF4231DEB55600007B1D0 /* Main.storyboard */,
@@ -123,6 +127,27 @@
 				91AEF4361DEB55600007B1D0 /* Info.plist */,
 			);
 			path = CommuteTests;
+			sourceTree = "<group>";
+		};
+		91EE70201DF0E7E30079ED43 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				91690A4E1DEE1B34003B94FF /* Commute.xcdatamodeld */,
+				91EE701C1DF0E7D80079ED43 /* ImageEntity+CoreDataClass.swift */,
+				91EE701D1DF0E7D80079ED43 /* ImageEntity+CoreDataProperties.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		91EE70211DF0E7F30079ED43 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				91EE70221DF0F3AC0079ED43 /* LogoImage.swift */,
+				91690A481DECC2C7003B94FF /* Model.swift */,
+				91690A531DEE3367003B94FF /* NetworkManager.swift */,
+				91690A511DEE1C14003B94FF /* CoreDataManager.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,11 +256,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91EE70231DF0F3AC0079ED43 /* LogoImage.swift in Sources */,
 				91690A521DEE1C14003B94FF /* CoreDataManager.swift in Sources */,
 				91690A491DECC2C7003B94FF /* Model.swift in Sources */,
 				91690A581DEE42A8003B94FF /* MenuTabBarController.swift in Sources */,
+				91EE701F1DF0E7D80079ED43 /* ImageEntity+CoreDataProperties.swift in Sources */,
 				91690A501DEE1B34003B94FF /* Commute.xcdatamodeld in Sources */,
 				91690A541DEE3367003B94FF /* NetworkManager.swift in Sources */,
+				91EE701E1DF0E7D80079ED43 /* ImageEntity+CoreDataClass.swift in Sources */,
 				91690A4B1DECC4FC003B94FF /* TravelTableViewCell.swift in Sources */,
 				91AEF41E1DEB55600007B1D0 /* AppDelegate.swift in Sources */,
 				91690A471DECC2B1003B94FF /* TravelTableViewController.swift in Sources */,

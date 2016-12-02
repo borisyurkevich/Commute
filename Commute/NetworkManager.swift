@@ -89,6 +89,33 @@ class NetworkManager {
         task.resume()
     }
     
+    func downloadImage(url: URL, completion: @escaping (UIImage) -> Void) {
+    
+        getDataFromUrl(url: url) { (data, response, error) -> Void in
+        
+            DispatchQueue.main.async {
+
+                guard let data = data, error == nil else { return }
+                
+                if let image = UIImage(data: data as Data) {
+                    completion(image)
+                }
+            }
+        }
+    }
+    
+    private func getDataFromUrl(url:URL,
+                        completion: @escaping ((_ data: NSData?,
+                                                _ response: URLResponse?,
+                                                _ error: NSError? ) -> Void)) {
+    
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        
+            completion(data as NSData?, response, error as NSError?)
+            
+            }.resume()
+    }
+    
     private func parse(dictionary: Dictionary<String, Any>,
                        context: NSManagedObjectContext,
                        entity: NSEntityDescription) -> TripEntity {

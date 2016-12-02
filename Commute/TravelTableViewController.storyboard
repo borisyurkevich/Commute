@@ -23,14 +23,14 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EI9-cv-mZm" id="Nul-U3-8Kg">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l2P-mg-Y7I" userLabel="Logo">
-                                            <rect key="frame" x="8" y="8" width="140" height="60"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l2P-mg-Y7I" userLabel="Logo">
+                                            <rect key="frame" x="8" y="8" width="133" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="NQz-4d-pxm"/>
-                                                <constraint firstAttribute="width" constant="140" id="h5Q-lv-xys"/>
+                                                <constraint firstAttribute="width" constant="133" id="h5Q-lv-xys"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcF-Y8-p0r" userLabel="Price">
@@ -68,7 +68,6 @@
         <!--Item 0-->
         <scene sceneID="I7K-yg-rq3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-xv-kHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="TravelTable" automaticallyAdjustsScrollViewInsets="NO" id="8qU-FT-sic" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item 0" id="cyd-NO-lFp"/>
                     <toolbarItems/>
@@ -82,6 +81,7 @@
                         <segue destination="iIx-vt-eZG" kind="relationship" relationship="rootViewController" id="KoW-5k-bdv"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-xv-kHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="192.80000000000001" y="29.23538230884558"/>
         </scene>

@@ -15,6 +15,7 @@ class MenuTabBarController: UITabBarController {
     var flights: TravelTableViewController?
     
     let model = Model()
+    let networkManager = NetworkManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,22 +42,8 @@ class MenuTabBarController: UITabBarController {
         }
         
         model.delegate = self
-        
-        // Requests are chained to avoid CoreData crash
-        // Train -> Bus -> Flight
-        model.update(type: .train)
+        model.update()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension MenuTabBarController: ModelDelegate {
@@ -68,20 +55,19 @@ extension MenuTabBarController: ModelDelegate {
             DispatchQueue.main.async {
                 self.trains?.tableView.reloadData()
             }
-            self.model.update(type: .bus)
+            
         case .bus:
             buses?.dataSource = model.busTrips
+            buses?.images = model.busTripsImages
             DispatchQueue.main.async {
                 self.buses?.tableView.reloadData()
             }
-            self.model.update(type: .plain)
             
         case .plain:
             flights?.dataSource = model.plainTrips
             DispatchQueue.main.async {
                 self.flights?.tableView.reloadData()
             }
-            // All data is loaded
         }
     }
     
@@ -102,5 +88,29 @@ extension MenuTabBarController: ModelDelegate {
                                         style: .default, handler: nil)
         alert.addAction(alertOption)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func newImagesAvailable(dataType: Transport) {
+        
+        switch dataType {
+        case .train:
+            trains?.images = model.trainTripsImages
+            DispatchQueue.main.async {
+                self.trains?.tableView.reloadData()
+            }
+            
+        case .bus:
+            buses?.images = model.busTripsImages
+            DispatchQueue.main.async {
+                self.buses?.tableView.reloadData()
+            }
+            
+        case .plain:
+            flights?.images = model.plainTripsImages
+            DispatchQueue.main.async {
+                self.flights?.tableView.reloadData()
+            }
+
+        }
     }
 }

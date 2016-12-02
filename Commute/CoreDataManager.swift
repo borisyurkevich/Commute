@@ -12,6 +12,7 @@ import CoreData
 class CoreDataManager {
 
     static let enitiyId = "TripEntity"
+    static let imageEnitiyId = "ImageEntity"
 
     static let sharedInstance : CoreDataManager = {
         let instance = CoreDataManager(modelName: "Commute")

@@ -11,11 +11,11 @@ import UIKit
 class TravelTableViewController: UITableViewController {
 
     var dataSource = [TripEntity]()
+    var images = [LogoImage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     //   tableView.register(TravelTableViewCell, forCellReuseIdentifier: "")
     }
 
     // MARK: - Table view data source
@@ -33,6 +33,13 @@ class TravelTableViewController: UITableViewController {
 
         let trip = dataSource[indexPath.row]
         cell.priceLabel.text = String("\(trip.id)")
+        
+        for logo in images {
+            if logo.id == Int(trip.id) {
+                cell.logoImageView.image = logo.image
+                break
+            }
+        }
 
         return cell
     }
