@@ -11,7 +11,7 @@ import UIKit
 class TravelTableViewController: UITableViewController {
 
     var dataSource = [TripEntity]()
-    var images = [LogoImage]()
+    var images = [ImageEntity]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,11 @@ class TravelTableViewController: UITableViewController {
         cell.priceLabel.text = String("\(trip.id)")
         
         for logo in images {
-            if logo.id == Int(trip.id) {
-                cell.logoImageView.image = logo.image
+        
+        
+        
+            if logo.id == trip.id {
+                cell.logoImageView.image = UIImage(data: logo.imageData as! Data)
                 break
             }
         }

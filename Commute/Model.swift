@@ -28,9 +28,9 @@ class Model {
     var trainTrips = [TripEntity]()
     var plainTrips = [TripEntity]()
     
-    var busTripsImages = [LogoImage]()
-    var trainTripsImages = [LogoImage]()
-    var plainTripsImages = [LogoImage]()
+    var busTripsImages = [ImageEntity]()
+    var trainTripsImages = [ImageEntity]()
+    var plainTripsImages = [ImageEntity]()
     
     var delegate: ModelDelegate?
     var network = NetworkManager()
@@ -72,11 +72,19 @@ class Model {
     
     func loadImgages(of type: Transport = .train, tripsArray: [TripEntity]) {
         
-        var newImagesCollection = [LogoImage]()
+        var newImagesCollection = [ImageEntity]()
+        
+        
+        let context = CoreDataManager.sharedInstance.managedContext
+        guard let entity = NSEntityDescription.entity(forEntityName: CoreDataManager.imageEnitiyId, in: context) else {
+            fatalError("Couldn't load Trip entity")
+        }
         
         for (index, trip) in tripsArray.enumerated() {
             
-            let newImage = LogoImage(type: type, id: index)
+            let newImage = ImageEntity(entity: entity, insertInto: context)
+            newImage.id = trip.id
+            newImage.type = Int16(type.rawValue)
             
             if let logoPath = trip.providerLogo {
                 
@@ -87,7 +95,7 @@ class Model {
                 if let url = URL(string: secureCorrectPath) {
                     self.network.downloadImage(url: url, completion: { (image) in
                         
-                        newImage.image = image
+                        newImage.imageData = UIImageJPEGRepresentation(image, 1.0) as NSData?
                         newImagesCollection.append(newImage)
                         
                         if index == (self.trainTrips.count - 1) {
