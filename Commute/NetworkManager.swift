@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreData
 import UIKit
 
 class NetworkManager {
@@ -19,7 +18,9 @@ class NetworkManager {
     }
     
     func request(commuteOption: Transport,
-                 completion: @escaping (_ success: Bool, _ error: Error?, _ result: [TripEntity]?) -> Void) {
+                 completion: @escaping (_ success: Bool,
+                                        _ error: Error?,
+                                        _ result: [[String: AnyObject]]?) -> Void) {
         
         var path = ""
         switch commuteOption {
@@ -49,7 +50,6 @@ class NetworkManager {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
             guard error == nil else {
-                print("Error while fetching remote trips: \(error)")
                 completion(false, error, nil)
                 return
             }
@@ -67,22 +67,7 @@ class NetworkManager {
                 return
             }
             
-            CoreDataManager.sharedInstance.remove(type: commuteOption)
-            
-            let context = CoreDataManager.sharedInstance.managedContext
-            guard let entity = NSEntityDescription.entity(forEntityName: CoreDataManager.enitiyId, in: context) else {
-                fatalError("Couldn't load Trip entity")
-            }
-            
-            var trips = [TripEntity]()
-            for row in rows {
-                
-                let aTrip = self.parse(dictionary: row, context: context, entity: entity)
-                aTrip.type = Int16(commuteOption.rawValue)
-                trips.append(aTrip)
-            }
-            
-            completion(true, nil, trips)
+            completion(true, nil, rows)
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -114,47 +99,6 @@ class NetworkManager {
             completion(data as NSData?, response, error as NSError?)
             
             }.resume()
-    }
-    
-    private func parse(dictionary: Dictionary<String, Any>,
-                       context: NSManagedObjectContext,
-                       entity: NSEntityDescription) -> TripEntity {
-        
-        let aTrip = TripEntity(entity: entity, insertInto: context)
-        
-        guard let id = dictionary["id"] as? Int64 else {
-            fatalError("Couldn't map id")
-        }
-        guard let logo = dictionary["provider_logo"] as? String else {
-            fatalError("Couldn't map logo")
-        }
-        guard let departureTime = dictionary["departure_time"] as? String else {
-            fatalError("Couldn't map departureTime")
-        }
-        guard let arrivalTime = dictionary["arrival_time"] as? String else {
-            fatalError("Couldn't map arrivalTime")
-        }
-        guard let stoppsCount = dictionary["number_of_stops"] as? Int16 else {
-            fatalError("Couldn't map stoppsCount")
-        }
-        
-        // Because of the error in API, price can be eather String or Int
-        let priceKey = "price_in_euros"
-        if let price = dictionary[priceKey] as? String {
-            aTrip.priceInEuros = price
-        } else if let priceInt = dictionary[priceKey] as? Int {
-            aTrip.priceInEuros = "\(priceInt)"
-        } else {
-            fatalError("Couldn't map price")
-        }
-        
-        aTrip.id = id
-        aTrip.providerLogo = logo
-        aTrip.numberOfStops = stoppsCount
-        aTrip.arrivalTime = arrivalTime
-        aTrip.departureTime = departureTime
-        
-        return aTrip
     }
 
 }

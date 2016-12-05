@@ -51,9 +51,9 @@ class CoreDataManager {
     }
     
     func remove(type: Transport) {
-        let postRequest = NSFetchRequest<TripEntity>(entityName: CoreDataManager.enitiyId)
+        let request = NSFetchRequest<TripEntity>(entityName: CoreDataManager.enitiyId)
         do {
-            let results = try managedContext.fetch(postRequest)
+            let results = try managedContext.fetch(request)
             
             let filteredResult = results.filter{Int($0.type) == type.rawValue}
             
@@ -62,21 +62,21 @@ class CoreDataManager {
             }
             
         } catch let error as NSError {
-            print("Could not fetch users for deleting: \(error), \(error.userInfo)")
+            print("Could not fetch items for deleting: \(error), \(error.userInfo)")
         }
         saveContext()
     }
     
-    func removeAll() {
-        let postRequest = NSFetchRequest<TripEntity>(entityName: CoreDataManager.enitiyId)
+    func removeImages() {
+        
+        let imagesRequest = NSFetchRequest<ImageEntity>(entityName: CoreDataManager.imageEnitiyId)
         do {
-            let results = try managedContext.fetch(postRequest)
-            for result in results {
-                managedContext.delete(result)
+            let result = try managedContext.fetch(imagesRequest)
+            for image in result {
+                managedContext.delete(image)
             }
-            
         } catch let error as NSError {
-            print("Could not fetch users for deleting: \(error), \(error.userInfo)")
+            print("Could not fetch images for deleting: \(error), \(error.userInfo)")
         }
         saveContext()
     }

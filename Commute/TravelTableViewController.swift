@@ -36,10 +36,10 @@ class TravelTableViewController: UITableViewController {
         
         for logo in images {
         
-        
-        
             if logo.id == trip.id {
-                cell.logoImageView.image = UIImage(data: logo.imageData as! Data)
+                if let newImageData = logo.imageData as? Data {
+                    cell.logoImageView.image = UIImage(data: newImageData)
+                }
                 break
             }
         }
