@@ -33,13 +33,12 @@ class Model {
     var plainTripsImages = [ImageEntity]()
     
     var delegate: ModelDelegate?
-    var network = NetworkManager()
     
     // Requests are chained to avoid CoreData crash
     // Train -> Bus -> Flight -> Images
-    func update(type: Transport = .train) {
+    func update(type: Transport = .train, networkManager: NetworkManager = NetworkManager()) {
         
-        network.request(commuteOption: type, completion: { (success, error, result) in
+        networkManager.request(commuteOption: type, completion: { (success, error, result) in
             
             if success {
             
@@ -64,16 +63,16 @@ class Model {
                 switch type {
                 case .train:
                     self.trainTrips = trips
-                    self.update(type: .bus)
+                    self.update(type: .bus, networkManager: networkManager)
                     
                 case .bus:
                     self.busTrips = trips
-                    self.update(type: .plain)
+                    self.update(type: .plain, networkManager: networkManager)
                     
                 case .plain:
                     self.plainTrips = trips
                     // All data loaded, now load images
-                    self.loadImgages(tripsArray: self.trainTrips)
+                    self.loadImgages(networkManager: networkManager, tripsArray: self.trainTrips)
                 }
                 
                 self.delegate?.newDataAvailable(dataType: type)
@@ -175,7 +174,9 @@ class Model {
         }
     }
 
-    private func loadImgages(of type: Transport = .train, tripsArray: [TripEntity]) {
+    private func loadImgages(of type: Transport = .train,
+                             networkManager: NetworkManager = NetworkManager(),
+                             tripsArray: [TripEntity]) {
         
         var newImagesCollection = [ImageEntity]()
         
@@ -198,7 +199,7 @@ class Model {
                 let secureCorrectPath = correctPath.replacingOccurrences(of: "http", with: "https")
                 
                 if let url = URL(string: secureCorrectPath) {
-                    self.network.downloadImage(url: url, completion: { (image) in
+                    networkManager.downloadImage(url: url, completion: { (image) in
                         
                         newImage.imageData = UIImageJPEGRepresentation(image, 1.0) as NSData?
                         newImagesCollection.append(newImage)
@@ -209,11 +210,11 @@ class Model {
                             switch type {
                             case .train:
                                 self.trainTripsImages = newImagesCollection
-                                self.loadImgages(of: .bus, tripsArray: self.busTrips)
+                                self.loadImgages(of: .bus, networkManager: networkManager, tripsArray: self.busTrips)
                                 
                             case .bus:
                                 self.busTripsImages = newImagesCollection
-                                self.loadImgages(of: .plain, tripsArray: self.plainTrips)
+                                self.loadImgages(of: .plain, networkManager: networkManager, tripsArray: self.plainTrips)
                                 
                             case .plain:
                                 self.plainTripsImages = newImagesCollection

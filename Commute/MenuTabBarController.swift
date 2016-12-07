@@ -15,7 +15,6 @@ class MenuTabBarController: UITabBarController {
     var flights: TravelTableViewController?
     
     let model = Model()
-    let networkManager = NetworkManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
